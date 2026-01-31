@@ -1,38 +1,42 @@
 import React from 'react';
+import {
+  Box,
+  Typography,
+  Grid,
+  Paper,
+  Divider
+} from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
-
 import CardList from '../components/CardList';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', background: 'white', padding: '1rem 2rem', borderRadius: '15px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-        <div>
-           <h1 style={{ margin: 0, fontSize: '1.5rem' }}>HCL Credit Card Portal</h1>
-           <p style={{ margin: 0, color: '#666' }}>Welcome back, {user?.name}</p>
-        </div>
-        <button
-          onClick={logout}
-          style={{ padding: '0.6rem 1.2rem', background: '#f44336', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-        >
-          Logout
-        </button>
-      </header>
+    <Box>
+      <Paper sx={{ p: 4, mb: 4, borderRadius: 4, background: 'linear-gradient(135deg, #003168 0%, #001a38 100%)', color: 'white' }}>
+        <Typography variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
+          Welcome back, {user?.name}!
+        </Typography>
+        <Typography variant="body1" sx={{ opacity: 0.9 }}>
+          Your HCL Credit portal is active. Browse your exclusive rewards and offers below.
+        </Typography>
+      </Paper>
 
-      <section>
-        <h2 style={{ paddingLeft: '2rem' }}>Exclusive Offers for You</h2>
+      <Box sx={{ px: 1 }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: 'primary.main' }}>
+          Exclusive Offers for You
+        </Typography>
         <CardList />
-      </section>
+      </Box>
 
       {user?.role === 'SUPER_ADMIN' && (
-        <div style={{ marginTop: '2rem', background: '#e3f2fd', padding: '1.5rem', borderRadius: '15px', textAlign: 'center' }}>
-          <h3>Super Admin Controls</h3>
-          <p>As a Super Admin, you can manage credit card offerings and user roles.</p>
-        </div>
+        <Paper sx={{ mt: 4, p: 3, bgcolor: '#e3f2fd', border: '1px solid #bbdefb' }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>Super Admin Controls</Typography>
+          <Typography variant="body2">As a Super Admin, you have full visibility across all system modules.</Typography>
+        </Paper>
       )}
-    </div>
+    </Box>
   );
 };
 

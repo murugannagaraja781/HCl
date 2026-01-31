@@ -2,8 +2,8 @@
 export const getCreditLimit = (annualIncome) => {
   const income = Number(annualIncome) || 0;
   if (income <= 200000) return { amount: 50000, type: 'fixed' };
-  if (income <= 300000) return { amount: 75000, type: 'fixed' };
-  if (income <= 500000) return { amount: 1000000, type: 'fixed' };
+  if (income > 200000 && income <= 300000) return { amount: 75000, type: 'fixed' };
+  if (income > 300000 && income <= 500000) return { amount: 1000000, type: 'fixed' };
   return { amount: null, type: 'subjective' };
 };
 
