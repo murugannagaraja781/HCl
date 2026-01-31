@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import {
   getCreditLimit,
   formatCurrency,
+  isValidPAN,
   getAge,
   MIN_APPLICANT_AGE,
 } from '../utils/creditCardUtils';
 import './ApplicationForm.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://hcl-ogs7.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const DUMMY_FORM_DATA = {
   fullName: 'Rahul Kumar Sharma',
@@ -32,12 +33,15 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
     annualIncome: '',
     address: '',
   });
+  const [creditScore, setCreditScore] = useState(null);
+  const [creditScoreLoading, setCreditScoreLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [applicationNumber, setApplicationNumber] = useState(null);
+  const [checkingPrevious, setCheckingPrevious] = useState(false);
 
   const creditLimitInfo = getCreditLimit(formData.annualIncome);
   const age = getAge(formData.dateOfBirth);
@@ -82,6 +86,10 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
 
     if (age !== null && age < MIN_APPLICANT_AGE) {
       setError(`Applicant must be at least ${MIN_APPLICANT_AGE} years old. Current age: ${age}.`);
+      return;
+    }
+    if (!panValid) {
+      setError('Please enter a valid PAN (e.g. ABCDE1234F).');
       return;
     }
     if (formData.phone.replace(/\D/g, '').length < 10) {
@@ -148,12 +156,13 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       cardName: card?.name,
       ...formData,
       pan: formData.pan.trim().toUpperCase(),
+      creditScore,
       creditLimit: creditLimitInfo.type === 'fixed' ? creditLimitInfo.amount : null,
       creditLimitType: creditLimitInfo.type,
     };
     setIsVerifying(true);
     axios
-      .post(`${API_URL}/card/submit`, payload)
+      .post(`${API_URL}/api/applications`, payload)
       .then((res) => {
         const appNum = res?.data?.applicationNumber || `HCL-${Date.now().toString(36).toUpperCase().slice(-8)}`;
         setApplicationNumber(appNum);
@@ -246,7 +255,12 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
                       setFormData({ ...formData, pan: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '') })
                     }
                     placeholder="ABCDE1234F"
+                    className={  formData.pan.length >= 10 ? 'input-invalid' : ''}
                   />
+                  {creditScoreLoading && <span className="field-hint">Fetching credit score…</span>}
+                  {creditScore != null && !creditScoreLoading && (
+                    <span className="field-hint valid">Credit score: {creditScore}</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Annual Income (₹) *</label>
@@ -298,8 +312,12 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
                   />
                 </div>
                 </div>
-                <button type="submit" className="submit-btn">
-                  Continue to Verify
+                <button
+                  type="submit"
+                  disabled={checkingPrevious || creditScoreLoading}
+                  className="submit-btn"
+                >
+                  {checkingPrevious ? 'Checking eligibility…' : 'Continue to Verify'}
                 </button>
               </form>
             ) : (
