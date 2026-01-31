@@ -34,6 +34,20 @@ app.get('/api', (req, res) => {
     res.json({ message: "Welcome to HCL Credit Card API" });
 });
 
+// Dummy Test API
+app.get('/api/test', (req, res) => {
+    res.json({
+        status: "success",
+        message: "HCL Server is live!",
+        timestamp: new Date(),
+        data: {
+            appName: "HCL Credit Card Portal",
+            version: "1.0.0",
+            developer: "Antigravity AI"
+        }
+    });
+});
+
 // Serve Static Assets in production
 if (process.env.NODE_ENV === 'production') {
     // Set static folder (Vite uses 'dist', Create React App uses 'build')
