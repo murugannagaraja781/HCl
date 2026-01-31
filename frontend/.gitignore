@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 # ======================
 # Node / Backend
 # ======================
 node_modules/
+=======
+# Logs
+logs
+*.log
+>>>>>>> fd1dcb841ded9e0ca5e0a66e961c274bb0832daf
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+<<<<<<< HEAD
 
 # Environment variables
 .env
@@ -62,3 +69,23 @@ coverage/
 # GitHub Actions
 # ======================
 .env.github
+=======
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+.env
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+>>>>>>> fd1dcb841ded9e0ca5e0a66e961c274bb0832daf

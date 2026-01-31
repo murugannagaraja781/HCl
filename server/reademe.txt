@@ -1,3 +1,16 @@
+cd /Users/wohozo/Documents/HCl/server
+npm install
+node seed.js  # This will create your super admin account
+npm start
+
+
+
+
+cd /Users/wohozo/Documents/HCl/frontend
+npm install
+npm run dev
+
+
 MONGODB_URI=mongodb+srv://murugannagaraja781_db_user:NewLife2025@cluster0.tp2gekn.mongodb.net/hclbank
 JWT_SECRET=supersecretkey2026
 PORT=5001
