@@ -1,4 +1,4 @@
-cd /Users/wohozo/Documents/HCl/backend
+cd /Users/wohozo/Documents/HCl/server
 npm install
 node seed.js  # This will create your super admin account
 npm start
