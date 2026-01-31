@@ -1,0 +1,28 @@
+                ┌────────────────────┐
+                │   Web              │
+                │   (React)          │
+                └─────────┬──────────┘
+                          │ HTTPS + JWT
+                          ▼
+                ┌────────────────────┐
+                │   API Gateway      │
+                │   (Express.js)     │
+                └─────────┬──────────┘
+                          │
+        ┌─────────────────┼─────────────────────────┐
+        ▼                 ▼                         ▼
+┌─────────────┐   ┌──────────────────────────┐   ┌────────────────────┐
+│ Auth Service│   │     Application Service  │   │  Credit Service    │
+│ (JWT)       │   │                          │   │ (PAN Integration)  │
+│ Login API   │   │ 1. CheckCustomer API     │   │ GetCreditScore API │
+│ Register API│   │ 2. SubmitApplication API │   └─────────┬──────────┘
+└─────┬───────┘   │ 3. ListApplications API  │             │
+      │           │ 4. UserDetails API       │             │
+      │           └─────────┬────────────────┘             │
+      │                     │                              │
+      ▼                     ▼                              ▼
+┌──────────────┐     ┌──────────────────┐        ┌──────────────────┐
+│ Auth DB      │     │ Application DB   │        │ Credit DB        │
+│ (Users)      │     │ (Applications)  │         │ (Scores Cache)   │
+└──────────────┘     └──────────────────┘        └──────────────────┘
+ MongoDB/Auth       MongoDB/DynamoDB          Redis / MongoDB
