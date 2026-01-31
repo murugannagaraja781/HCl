@@ -9,6 +9,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// CSP Middleware
+app.use((req, res, next) => {
+    res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+        "font-src 'self' data: https://cdnjs.cloudflare.com https://hcl-ogs7.onrender.com; " +
+        "img-src 'self' data: https://images.unsplash.com; " +
+        "connect-src 'self' https://hcl-ogs7.onrender.com;"
+    );
+    next();
+});
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/cards', require('./routes/cardRoutes'));
