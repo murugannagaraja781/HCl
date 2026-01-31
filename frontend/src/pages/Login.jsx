@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -14,7 +14,21 @@ const Login = () => {
     setError('');
     const result = await login(username, password);
     if (result.success) {
-      navigate('/dashboard');
+      // Decode user role from local storage or get from result
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      const role = storedUser?.role;
+
+      if (role === 'SUPER_ADMIN' || role === 'ADMIN') {
+        navigate('/admin');
+      } else if (role === 'MANAGER1') {
+        navigate('/manager1');
+      } else if (role === 'MANAGER2') {
+        navigate('/manager2');
+      } else if (role === 'MANAGER') {
+        navigate('/manager');
+      } else {
+        navigate('/dashboard');
+      }
     } else {
       setError(result.message);
     }

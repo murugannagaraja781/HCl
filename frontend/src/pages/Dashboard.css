@@ -1,0 +1,263 @@
+.dashboard-container {
+    padding: 2rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.dash-header h1 {
+    font-size: 2rem;
+    color: #003168;
+}
+
+.add-btn {
+    background: #003168;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.alert.success {
+    background: #e6fcf5;
+    color: #0ca678;
+}
+
+.alert.error {
+    background: #fff5f5;
+    color: #fa5252;
+}
+
+.add-product-form {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    border: 1px solid #e2e8f0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.f-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.f-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.f-group input,
+.f-group select,
+.f-group textarea {
+    padding: 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.save-btn {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.dash-table th {
+    text-align: left;
+    padding: 1rem;
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.dash-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.edit-btn {
+    background: none;
+    border: 1px solid #003168;
+    color: #003168;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
+}
+
+.stat-val {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #003168;
+    margin-top: 0.5rem;
+}
+
+.activity-item {
+    padding: 1rem;
+    border-left: 4px solid #003168;
+    background: #f8fafc;
+    margin-bottom: 1rem;
+}
+
+/* Role-specific Dashboard Themes */
+.m1-theme .dash-header h1 {
+    color: #087f5b;
+}
+
+.m1-theme .score-badge.high {
+    background: #ebfbee;
+    color: #2b8a3e;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.m1-theme .score-badge.med {
+    background: #fff9db;
+    color: #f08c00;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.m1-theme .score-badge.low {
+    background: #fff5f5;
+    color: #c92a2a;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.m2-theme .dash-header h1 {
+    color: #1971c2;
+}
+
+.m2-theme .status-pill {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.m2-theme .status-pill.pending {
+    background: #e7f5ff;
+    color: #1971c2;
+}
+
+.m2-theme .status-pill.approved {
+    background: #ebfbee;
+    color: #087f5b;
+}
+
+.m2-theme .status-pill.limit-set {
+    background: #fff4e6;
+    color: #d9480f;
+}
+
+/* Table Improvements */
+.customer-table-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
+}
+
+.search-box input {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    width: 300px;
+    font-size: 0.9rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.pagination button {
+    padding: 0.5rem 1.5rem;
+    background: #003168;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background: #ccc;
+}
+
+.action-btn-small {
+    background: #003168;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.limit-btn {
+    padding: 4px 10px;
+    border: 1px solid #003168;
+    background: transparent;
+    color: #003168;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.limit-btn.blue {
+    border-color: #1971c2;
+    color: #1971c2;
+}

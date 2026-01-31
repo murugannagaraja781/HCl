@@ -1,0 +1,22 @@
+{
+  "api_summary": {
+    "GET_auth_me": { "path": "/api/auth/me", "description": "Fetches current user profile from token" },
+    "GET_cards": { "path": "/api/cards", "description": "Retrieves all credit card products" },
+    "GET_customers": { "path": "/api/customers", "description": "Fetches all customer application records for managers" }
+  },
+  "users": [
+    { "id": "u1", "username": "admin@gmail.com", "role": "SUPER_ADMIN", "name": "System Admin" },
+    { "id": "u2", "username": "manager1", "role": "MANAGER1", "name": "M1 Approver" },
+    { "id": "u3", "username": "manager2", "role": "MANAGER2", "name": "M2 Limit Setter" }
+  ],
+  "cards": [
+    { "id": 1, "name": "HCL Platinum Rewards", "type": "Visa", "benefits": "5% Cashback on Dinning", "fee": "₹999", "category": "Rewards" },
+    { "id": 2, "name": "HCL Travel Infinite", "type": "Mastercard", "benefits": "Free Airport Lounge Access", "fee": "₹2999", "category": "Travel" },
+    { "id": 3, "name": "HCL Student Pro", "type": "Visa", "benefits": "Zero Annual Fee", "fee": "₹0", "category": "Student" }
+  ],
+  "customers": [
+    { "id": 1, "name": "John Doe", "email": "john@example.com", "creditScore": 720, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9876543210" },
+    { "id": 2, "name": "Jane Smith", "email": "jane@example.com", "creditScore": 650, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9876543211" },
+    { "id": 3, "name": "Bob Wilson", "email": "bob@example.com", "creditScore": 810, "limitStatus": "Limit Set", "approvedLimit": 500000, "finalStatus": "Pending", "phone": "9876543212" }
+  ]
+}
