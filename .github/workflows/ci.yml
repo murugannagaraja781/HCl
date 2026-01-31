@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./server
+        working-directory: ./backend/auth-service/
 
     steps:
     - uses: actions/checkout@v3
