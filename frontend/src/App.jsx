@@ -10,12 +10,12 @@ import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './ProtectedRoute';
 import Layout from './components/Layout';
 
-// Lazy loaded components
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const ManagerDashboard = lazy(() => import('./pages/ManagerDashboard'));
-const Manager1Dashboard = lazy(() => import('./pages/Manager1Dashboard'));
-const Manager2Dashboard = lazy(() => import('./pages/Manager2Dashboard'));
+// Static imports to prevent "Failed to fetch" errors on dynamic chunks during demo
+import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import ManagerDashboard from './pages/ManagerDashboard';
+import Manager1Dashboard from './pages/Manager1Dashboard';
+import Manager2Dashboard from './pages/Manager2Dashboard';
 
 function App() {
   return (
