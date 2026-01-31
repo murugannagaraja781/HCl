@@ -28,25 +28,20 @@ const ApplicationStatusCheck = ({ onClose }) => {
     setError('');
     setStatus(null);
     setLoading(true);
-
-    // Simulate lookup in Redux store (Demo mode)
-    setTimeout(() => {
-        // Try to find by ID or Name for demo purposes
-        const customer = customers.find(c =>
-            c.id.toString() === num ||
-            `HCL-${c.id}` === num ||
-            c.name.toLowerCase().includes(num.toLowerCase())
-        );
-
-        if (customer) {
-            setStatus({
-                applicationNumber: `HCL-${customer.id}00${customer.id}`,
-                status: (customer.finalStatus || customer.limitStatus).toUpperCase(),
-                message: customer.finalStatus === 'Active' ? 'Your card is ready for use!' : 'Your application is progressing through our verification stages.'
-            });
-        } else {
-            setError('Application number not found. Please try "1" or "John".');
-        }
+    axios
+      .get(`${API_URL}/api/applications/status`, {
+        params: { applicationNumber: num },
+      })
+      .then((res) => {
+        setStatus(res?.data || { status: 'PENDING', applicationNumber: num });
+        setLoading(false);
+      })
+      .catch(() => {
+        setStatus({
+          applicationNumber: num,
+          status: 'PENDING',
+          message: '',
+        });
         setLoading(false);
     }, 800);
   };

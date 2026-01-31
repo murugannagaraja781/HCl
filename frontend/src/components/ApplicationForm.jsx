@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {
   getCreditLimit,
   formatCurrency,
-  isValidPAN,
   getAge,
   MIN_APPLICANT_AGE,
 } from '../utils/creditCardUtils';
 import './ApplicationForm.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+const API_URL = import.meta.env.VITE_API_URL || 'https://hcl-ogs7.onrender.com/';
 
 const DUMMY_FORM_DATA = {
   fullName: 'Rahul Kumar Sharma',
@@ -33,15 +32,12 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
     annualIncome: '',
     address: '',
   });
-  const [creditScore, setCreditScore] = useState(null);
-  const [creditScoreLoading, setCreditScoreLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [applicationNumber, setApplicationNumber] = useState(null);
-  const [checkingPrevious, setCheckingPrevious] = useState(false);
 
   const creditLimitInfo = getCreditLimit(formData.annualIncome);
   const age = getAge(formData.dateOfBirth);
@@ -62,7 +58,7 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       if (res?.data?.score != null) {
         setCreditScore(res.data.score);
       } else {
-
+       
         const simulated = 600 + Math.floor(Math.random() * 250);
         setCreditScore(simulated);
       }
@@ -88,32 +84,32 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       setError(`Applicant must be at least ${MIN_APPLICANT_AGE} years old. Current age: ${age}.`);
       return;
     }
-    if (!panValid) {
-      setError('Please enter a valid PAN (e.g. ABCDE1234F).');
-      return;
-    }
     if (formData.phone.replace(/\D/g, '').length < 10) {
       setError('Please enter a valid 10-digit phone number.');
       return;
     }
 
     setCheckingPrevious(true);
-
-    // Simulate finding a recent application (dummy logic)
-    const mockRecentApps = ['ABCDE1234F', 'XYZPQ9876S'];
-    const isRecent = mockRecentApps.includes(formData.pan.trim().toUpperCase());
-
-    setTimeout(() => {
-      if (isRecent) {
-        setError(
-          'A previous application was Approved or Rejected in the last 6 months for this PAN. You cannot apply again yet.'
-        );
-        setCheckingPrevious(false);
-      } else {
+    axios
+      .get(`${API_URL}/api/applications/previous`, {
+        params: { pan: formData.pan.trim().toUpperCase() },
+      })
+      .then((res) => {
+        const hasRecent = res?.data?.hasRecentApplication;
+        if (hasRecent) {
+          setError(
+            'A previous application was Approved or Rejected in the last 6 months for this PAN. You cannot apply again yet.'
+          );
+          setCheckingPrevious(false);
+          return;
+        }
         setStep(2);
         setCheckingPrevious(false);
-      }
-    }, 800);
+      })
+      .catch(() => {
+        setStep(2);
+        setCheckingPrevious(false);
+      });
   };
 
   const handleSendOTP = (e) => {
@@ -152,13 +148,12 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       cardName: card?.name,
       ...formData,
       pan: formData.pan.trim().toUpperCase(),
-      creditScore,
       creditLimit: creditLimitInfo.type === 'fixed' ? creditLimitInfo.amount : null,
       creditLimitType: creditLimitInfo.type,
     };
     setIsVerifying(true);
     axios
-      .post(`${API_URL}/api/applications`, payload)
+      .post(`${API_URL}/card/submit`, payload)
       .then((res) => {
         const appNum = res?.data?.applicationNumber || `HCL-${Date.now().toString(36).toUpperCase().slice(-8)}`;
         setApplicationNumber(appNum);
@@ -251,12 +246,7 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
                       setFormData({ ...formData, pan: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '') })
                     }
                     placeholder="ABCDE1234F"
-                    className={!panValid && formData.pan.length >= 10 ? 'input-invalid' : ''}
                   />
-                  {creditScoreLoading && <span className="field-hint">Fetching credit score…</span>}
-                  {creditScore != null && !creditScoreLoading && (
-                    <span className="field-hint valid">Credit score: {creditScore}</span>
-                  )}
                 </div>
                 <div className="form-group">
                   <label>Annual Income (₹) *</label>
@@ -308,12 +298,8 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
                   />
                 </div>
                 </div>
-                <button
-                  type="submit"
-                  disabled={checkingPrevious || creditScoreLoading}
-                  className="submit-btn"
-                >
-                  {checkingPrevious ? 'Checking eligibility…' : 'Continue to Verify'}
+                <button type="submit" className="submit-btn">
+                  Continue to Verify
                 </button>
               </form>
             ) : (
