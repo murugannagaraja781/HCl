@@ -1,0 +1,64 @@
+# ======================
+# Node / Backend
+# ======================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# ======================
+# React / Frontend
+# ======================
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# ======================
+# Build outputs
+# ======================
+dist/
+build/
+
+# ======================
+# Logs
+# ======================
+logs/
+*.log
+
+# ======================
+# OS files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDE / Editor
+# ======================
+.vscode/
+.idea/
+*.swp
+
+# ======================
+# Testing / Coverage
+# ======================
+coverage/
+
+# ======================
+# Cache
+# ======================
+.cache/
+.npm/
+.yarn/
+.pnpm-store/
+
+# ======================
+# GitHub Actions
+# ======================
+.env.github

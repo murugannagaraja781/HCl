@@ -1,0 +1,47 @@
+Home Dashboard
+     |
+     v
+Apply Credit Card
+     |
+     v
+Enter Applicant Details
+(Name, DOB, PAN, Income and etc)
+   
+Employee Screen
+(System Validations)
+     |
+     +--> Age Check (>18)
+     |
+     +--> Check Previous Applications (6 months)
+     |
+     +--> Fetch Credit Score (PAN API)
+     |
+     v
+Status Update
+ ┌─────────────────────────────┐
+ │ APPROVED                    │
+ │ REJECTED                    │
+ │ IN_PROGRESS                 │
+ └─────────────────────────────┘
+     |
+     v
+If Approved → Credit Limit Screen
+If Rejected → Rejection Reason
+
+
+
+Submit Application
+   |
+   v
+Application Service
+   |
+   +--> validateAge()
+   |
+   +--> checkLast6Months()
+   |
+   +--> fetchCreditScore(pan)
+   |
+   +--> calculateCreditLimit()
+   |
+   v
+Update Status in DB
