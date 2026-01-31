@@ -1,3 +1,4 @@
+import React, { useState, Fragment } from 'react';
 import {
   Box,
   Typography,
@@ -95,7 +96,7 @@ const Manager2Dashboard = () => {
                 <DialogContent dividers>
                     <List dense>
                         {selectedHistory.map((item, i) => (
-                            <React.Fragment key={i}>
+                            <Fragment key={i}>
                                 <ListItem sx={{ py: 1.5 }}>
                                     <ListItemText
                                         primary={<strong>{item.action}</strong>}
@@ -108,7 +109,7 @@ const Manager2Dashboard = () => {
                                     />
                                 </ListItem>
                                 {i < selectedHistory.length - 1 && <Divider />}
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                     </List>
                 </DialogContent>

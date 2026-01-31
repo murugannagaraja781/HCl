@@ -8,7 +8,7 @@ import {
 } from '../utils/creditCardUtils';
 import './ApplicationForm.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://hcl-ogs7.onrender.com/';
+const API_URL = import.meta.env.VITE_API_URL || 'https://hcl-ogs7.onrender.com';
 
 const DUMMY_FORM_DATA = {
   fullName: 'Rahul Kumar Sharma',
@@ -58,7 +58,7 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       if (res?.data?.score != null) {
         setCreditScore(res.data.score);
       } else {
-       
+
         const simulated = 600 + Math.floor(Math.random() * 250);
         setCreditScore(simulated);
       }

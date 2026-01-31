@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import './ApplicationForm.css';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://hcl-ogs7.onrender.com';
 
 const STATUS_LABELS = {
   PENDING: 'Under Review',
@@ -43,7 +46,7 @@ const ApplicationStatusCheck = ({ onClose }) => {
           message: '',
         });
         setLoading(false);
-    }, 800);
+      });
   };
 
   return (
