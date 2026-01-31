@@ -23,9 +23,31 @@ app.use((req, res, next) => {
     next();
 });
 
+const path = require('path');
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/cards', require('./routes/cardRoutes'));
+
+// Welcome route for API
+app.get('/api', (req, res) => {
+    res.json({ message: "Welcome to HCL Credit Card API" });
+});
+
+// Serve Static Assets in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder (Vite uses 'dist', Create React App uses 'build')
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'));
+    });
+} else {
+    // Simple root route for development
+    app.get('/', (req, res) => {
+        res.send('Server is running... (In development mode)');
+    });
+}
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
