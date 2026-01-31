@@ -1,22 +1,53 @@
-{
-  "api_summary": {
-    "GET_auth_me": { "path": "/api/auth/me", "description": "Fetches current user profile from token" },
-    "GET_cards": { "path": "/api/cards", "description": "Retrieves all credit card products" },
-    "GET_customers": { "path": "/api/customers", "description": "Fetches all customer application records for managers" }
-  },
-  "users": [
-    { "id": "u1", "username": "admin@gmail.com", "role": "SUPER_ADMIN", "name": "System Admin" },
-    { "id": "u2", "username": "manager1", "role": "MANAGER1", "name": "M1 Approver" },
-    { "id": "u3", "username": "manager2", "role": "MANAGER2", "name": "M2 Limit Setter" }
-  ],
-  "cards": [
-    { "id": 1, "name": "HCL Platinum Rewards", "type": "Visa", "benefits": "5% Cashback on Dinning", "fee": "₹999", "category": "Rewards" },
-    { "id": 2, "name": "HCL Travel Infinite", "type": "Mastercard", "benefits": "Free Airport Lounge Access", "fee": "₹2999", "category": "Travel" },
-    { "id": 3, "name": "HCL Student Pro", "type": "Visa", "benefits": "Zero Annual Fee", "fee": "₹0", "category": "Student" }
-  ],
-  "customers": [
-    { "id": 1, "name": "John Doe", "email": "john@example.com", "creditScore": 720, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9876543210" },
-    { "id": 2, "name": "Jane Smith", "email": "jane@example.com", "creditScore": 650, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9876543211" },
-    { "id": 3, "name": "Bob Wilson", "email": "bob@example.com", "creditScore": 810, "limitStatus": "Limit Set", "approvedLimit": 500000, "finalStatus": "Pending", "phone": "9876543212" }
-  ]
-}
+[
+  { "id": 1, "name": "Regular User", "email": "user@gmail.com", "creditScore": 750, "limitStatus": "Approved", "approvedLimit": 150000, "finalStatus": "Approved", "phone": "9876543210" },
+  { "id": 4, "name": "Aarav Kumar", "email": "aarav4@example.com", "creditScore": 735, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000004" },
+  { "id": 5, "name": "Diya Sharma", "email": "diya5@example.com", "creditScore": 680, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000005" },
+  { "id": 6, "name": "Rohan Mehta", "email": "rohan6@example.com", "creditScore": 710, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000006" },
+  { "id": 7, "name": "Ishita Rao", "email": "ishita7@example.com", "creditScore": 640, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000007" },
+  { "id": 8, "name": "Karthik Reddy", "email": "karthik8@example.com", "creditScore": 785, "limitStatus": "Limit Set", "approvedLimit": 300000, "finalStatus": "Pending", "phone": "9000000008" },
+  { "id": 9, "name": "Sneha Pillai", "email": "sneha9@example.com", "creditScore": 690, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000009" },
+  { "id": 10, "name": "Vikram Singh", "email": "vikram10@example.com", "creditScore": 820, "limitStatus": "Limit Set", "approvedLimit": 600000, "finalStatus": "Pending", "phone": "9000000010" },
+  { "id": 11, "name": "Ananya Das", "email": "ananya11@example.com", "creditScore": 705, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000011" },
+  { "id": 12, "name": "Manoj Nair", "email": "manoj12@example.com", "creditScore": 655, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000012" },
+  { "id": 13, "name": "Priya Verma", "email": "priya13@example.com", "creditScore": 730, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000013" },
+  { "id": 14, "name": "Rahul Jain", "email": "rahul14@example.com", "creditScore": 770, "limitStatus": "Limit Set", "approvedLimit": 250000, "finalStatus": "Pending", "phone": "9000000014" },
+  { "id": 15, "name": "Meera Iyer", "email": "meera15@example.com", "creditScore": 690, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000015" },
+  { "id": 16, "name": "Arjun Patel", "email": "arjun16@example.com", "creditScore": 810, "limitStatus": "Limit Set", "approvedLimit": 450000, "finalStatus": "Pending", "phone": "9000000016" },
+  { "id": 17, "name": "Neha Kapoor", "email": "neha17@example.com", "creditScore": 645, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000017" },
+  { "id": 18, "name": "Sanjay Roy", "email": "sanjay18@example.com", "creditScore": 720, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000018" },
+  { "id": 19, "name": "Pooja Bhat", "email": "pooja19@example.com", "creditScore": 760, "limitStatus": "Limit Set", "approvedLimit": 350000, "finalStatus": "Pending", "phone": "9000000019" },
+  { "id": 20, "name": "Aditya Sen", "email": "aditya20@example.com", "creditScore": 700, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000020" },
+  { "id": 21, "name": "Lavanya Krishnan", "email": "lavanya21@example.com", "creditScore": 675, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000021" },
+  { "id": 22, "name": "Deepak Yadav", "email": "deepak22@example.com", "creditScore": 790, "limitStatus": "Limit Set", "approvedLimit": 400000, "finalStatus": "Pending", "phone": "9000000022" },
+  { "id": 23, "name": "Nisha Gupta", "email": "nisha23@example.com", "creditScore": 660, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000023" },
+  { "id": 24, "name": "Harish Kumar", "email": "harish24@example.com", "creditScore": 750, "limitStatus": "Limit Set", "approvedLimit": 280000, "finalStatus": "Pending", "phone": "9000000024" },
+  { "id": 25, "name": "Swathi R", "email": "swathi25@example.com", "creditScore": 685, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000025" },
+  { "id": 26, "name": "Yogesh Malhotra", "email": "yogesh26@example.com", "creditScore": 805, "limitStatus": "Limit Set", "approvedLimit": 500000, "finalStatus": "Pending", "phone": "9000000026" },
+  { "id": 27, "name": "Divya S", "email": "divya27@example.com", "creditScore": 695, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000027" },
+  { "id": 28, "name": "Gokul Raj", "email": "gokul28@example.com", "creditScore": 740, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000028" },
+  { "id": 29, "name": "Keerthi V", "email": "keerthi29@example.com", "creditScore": 670, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000029" },
+  { "id": 30, "name": "Suresh Babu", "email": "suresh30@example.com", "creditScore": 820, "limitStatus": "Limit Set", "approvedLimit": 650000, "finalStatus": "Pending", "phone": "9000000030" },
+  { "id": 31, "name": "Anjali Menon", "email": "anjali31@example.com", "creditScore": 710, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000031" },
+  { "id": 32, "name": "Prakash T", "email": "prakash32@example.com", "creditScore": 690, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000032" },
+  { "id": 33, "name": "Ritika Shah", "email": "ritika33@example.com", "creditScore": 755, "limitStatus": "Limit Set", "approvedLimit": 300000, "finalStatus": "Pending", "phone": "9000000033" },
+  { "id": 34, "name": "Vivek Anand", "email": "vivek34@example.com", "creditScore": 640, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000034" },
+  { "id": 35, "name": "Shalini N", "email": "shalini35@example.com", "creditScore": 705, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000035" },
+  { "id": 36, "name": "Tarun Khanna", "email": "tarun36@example.com", "creditScore": 815, "limitStatus": "Limit Set", "approvedLimit": 550000, "finalStatus": "Pending", "phone": "9000000036" },
+  { "id": 37, "name": "Aishwarya P", "email": "aishwarya37@example.com", "creditScore": 680, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000037" },
+  { "id": 38, "name": "Kunal Arora", "email": "kunal38@example.com", "creditScore": 725, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000038" },
+  { "id": 39, "name": "Bhavya L", "email": "bhavya39@example.com", "creditScore": 660, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000039" },
+  { "id": 40, "name": "Naveen R", "email": "naveen40@example.com", "creditScore": 770, "limitStatus": "Limit Set", "approvedLimit": 420000, "finalStatus": "Pending", "phone": "9000000040" },
+  { "id": 41, "name": "Sahana M", "email": "sahana41@example.com", "creditScore": 695, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000041" },
+  { "id": 42, "name": "Imran Khan", "email": "imran42@example.com", "creditScore": 740, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000042" },
+  { "id": 43, "name": "Ramesh I", "email": "ramesh43@example.com", "creditScore": 720, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000043" },
+  { "id": 44, "name": "Gayathri S", "email": "gayathri44@example.com", "creditScore": 680, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000044" },
+  { "id": 45, "name": "Mohit S", "email": "mohit45@example.com", "creditScore": 805, "limitStatus": "Limit Set", "approvedLimit": 500000, "finalStatus": "Pending", "phone": "9000000045" },
+  { "id": 46, "name": "Varsha N", "email": "varsha46@example.com", "creditScore": 650, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000046" },
+  { "id": 47, "name": "Ashok P", "email": "ashok47@example.com", "creditScore": 710, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000047" },
+  { "id": 48, "name": "Tejaswini R", "email": "tejas48@example.com", "creditScore": 760, "limitStatus": "Limit Set", "approvedLimit": 390000, "finalStatus": "Pending", "phone": "9000000048" },
+  { "id": 49, "name": "Lokesh M", "email": "lokesh49@example.com", "creditScore": 675, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000049" },
+  { "id": 50, "name": "Pavithra K", "email": "pavithra50@example.com", "creditScore": 735, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000050" },
+  { "id": 51, "name": "Dinesh V", "email": "dinesh51@example.com", "creditScore": 790, "limitStatus": "Limit Set", "approvedLimit": 470000, "finalStatus": "Pending", "phone": "9000000051" },
+  { "id": 52, "name": "Harini T", "email": "harini52@example.com", "creditScore": 700, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000052" },
+  { "id": 53, "name": "Surya Narayan", "email": "surya53@example.com", "creditScore": 820, "limitStatus": "Limit Set", "approvedLimit": 700000, "finalStatus": "Pending", "phone": "9000000053" }
+]

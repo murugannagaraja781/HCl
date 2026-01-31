@@ -1,74 +1,80 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  TextField,
+  InputAdornment,
+  Pagination,
+  Alert
+} from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import useCustomers from '../hooks/useCustomers';
 import useDebounce from '../hooks/useDebounce';
 import withRole from '../hoc/withRole';
-import '../pages/Dashboard.css';
+import CustomerTable from '../components/CustomerTable';
 
 const Manager1Dashboard = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const debouncedSearch = useDebounce(search, 500);
-    const { customers, totalPages, updateCustomer } = useCustomers(debouncedSearch, page);
+    const { customers, totalPages, updateCustomer } = useCustomers(debouncedSearch, page, 5);
 
-    const handleCheckScore = useCallback((id) => {
-        // In reality, this might call an API to fetch the latest score
-        alert(`Refreshing credit score for customer ID: ${id}`);
-    }, []);
+    const handleAction = (id, type) => {
+        if (type === 'evaluate') {
+            updateCustomer(id, { limitStatus: 'Limit Set' });
+        }
+    };
 
     return (
-        <div className="dashboard-container m1-theme">
-            <header className="dash-header">
-                <div>
-                    <h1>Manager Level 1</h1>
-                    <p>Credit Evaluation & Customer Details</p>
-                </div>
-                <div className="search-box">
-                    <input
-                        type="text"
-                        placeholder="Search Customers..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
-            </header>
+        <Box>
+            <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+                <Box>
+                    <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, color: 'primary.main' }}>
+                        Credit Evaluation
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        Review applicant credit scores and evaluate eligibility.
+                    </Typography>
+                </Box>
 
-            <div className="customer-table-container">
-                <table className="dash-table">
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Credit Score</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {customers.map(c => (
-                            <tr key={c.id}>
-                                <td>{c.name}</td>
-                                <td>{c.email}</td>
-                                <td>{c.phone}</td>
-                                <td>
-                                    <span className={`score-badge ${c.creditScore > 750 ? 'high' : c.creditScore > 650 ? 'med' : 'low'}`}>
-                                        {c.creditScore}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button onClick={() => handleCheckScore(c.id)} className="action-btn-small">Check Score</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                <TextField
+                    placeholder="Search customers..."
+                    variant="outlined"
+                    size="small"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    sx={{ width: { xs: '100%', sm: 350 }, backgroundColor: 'white' }}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon color="action" />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </Box>
 
-            <div className="pagination">
-                <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>Prev</button>
-                <span>Page {page} of {totalPages}</span>
-                <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
-            </div>
-        </div>
+            <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
+                <strong>Action Required:</strong> Please verify the credit scores below. Clicking evaluate will move the application to the Limit Setting stage.
+            </Alert>
+
+            <CustomerTable
+                customers={customers}
+                role="MANAGER1"
+                onAction={handleAction}
+            />
+
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+                <Pagination
+                    count={totalPages}
+                    page={page}
+                    onChange={(e, v) => setPage(v)}
+                    color="primary"
+                    shape="rounded"
+                    sx={{ '& .MuiPaginationItem-root': { fontWeight: 700 } }}
+                />
+            </Box>
+        </Box>
     );
 };
 
