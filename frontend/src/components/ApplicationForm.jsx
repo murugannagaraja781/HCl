@@ -9,7 +9,7 @@ import {
 } from '../utils/creditCardUtils';
 import './ApplicationForm.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const DUMMY_FORM_DATA = {
   fullName: 'Rahul Kumar Sharma',
