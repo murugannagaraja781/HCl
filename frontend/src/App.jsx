@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
+import ApplyPage from './pages/ApplyPage';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/apply" element={<ApplyPage />} />
           <Route
             path="/dashboard"
             element={

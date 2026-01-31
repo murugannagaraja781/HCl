@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApplicationForm from '../components/ApplicationForm';
+import ApplicationStatusCheck from '../components/ApplicationStatusCheck';
 import './LandingPage.css';
 
 const LandingPage = () => {
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [showForm, setShowForm] = useState(false);
+    const [showStatusCheck, setShowStatusCheck] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
 
     const categories = ['All', 'Travel', 'Cashback', 'Rewards', 'Premium'];
@@ -62,7 +64,7 @@ const LandingPage = () => {
                     <p>Designed for your lifestyle. Seamless, secure, and rewarding.</p>
                     <div className="hero-btns">
                         <button className="btn-primary">Explore Now</button>
-                        <button className="btn-secondary">Check Eligibility</button>
+                        <button className="btn-secondary" onClick={() => setShowStatusCheck(true)}>Check Application Status</button>
                     </div>
                 </div>
             </header>
@@ -102,6 +104,9 @@ const LandingPage = () => {
                     card={selectedCard}
                     onClose={() => setShowForm(false)}
                 />
+            )}
+            {showStatusCheck && (
+                <ApplicationStatusCheck onClose={() => setShowStatusCheck(false)} />
             )}
         </div>
     );
