@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
 import {
   Box,
   Typography,
   TextField,
   InputAdornment,
   Pagination,
-  Alert
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Divider
 } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import useCustomers from '../hooks/useCustomers';
@@ -16,12 +24,19 @@ import CustomerTable from '../components/CustomerTable';
 const Manager2Dashboard = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
+    const [historyOpen, setHistoryOpen] = useState(false);
+    const [selectedHistory, setSelectedHistory] = useState([]);
     const debouncedSearch = useDebounce(search, 500);
     const { customers, totalPages, updateCustomer } = useCustomers(debouncedSearch, page, 5);
 
-    const handleAction = (id, type) => {
+    const handleAction = (id, type, data) => {
         if (type === 'approve') {
-            updateCustomer(id, { finalStatus: 'Approved', limitStatus: 'Approved' });
+            updateCustomer(id, { finalStatus: 'Approved', limitStatus: 'Approved' }, { action: 'Limit Approved', actor: 'Manager2' });
+        } else if (type === 'view') {
+            setSelectedHistory(data || []);
+            setHistoryOpen(true);
+        } else if (type === 'reject') {
+            updateCustomer(id, { finalStatus: 'Rejected', limitStatus: 'Rejected' }, { action: 'Limit Rejected', actor: 'Manager2' });
         }
     };
 
@@ -74,6 +89,33 @@ const Manager2Dashboard = () => {
                     sx={{ '& .MuiPaginationItem-root': { fontWeight: 700 } }}
                 />
             </Box>
+
+            <Dialog open={historyOpen} onClose={() => setHistoryOpen(false)} maxWidth="xs" fullWidth>
+                <DialogTitle sx={{ fontWeight: 800 }}>Application History</DialogTitle>
+                <DialogContent dividers>
+                    <List dense>
+                        {selectedHistory.map((item, i) => (
+                            <React.Fragment key={i}>
+                                <ListItem sx={{ py: 1.5 }}>
+                                    <ListItemText
+                                        primary={<strong>{item.action}</strong>}
+                                        secondary={
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
+                                                <Typography variant="caption">{item.actor}</Typography>
+                                                <Typography variant="caption">{item.date}</Typography>
+                                            </Box>
+                                        }
+                                    />
+                                </ListItem>
+                                {i < selectedHistory.length - 1 && <Divider />}
+                            </React.Fragment>
+                        ))}
+                    </List>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setHistoryOpen(false)}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };

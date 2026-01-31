@@ -106,8 +106,8 @@ const CustomerTable = ({ customers, role, onAction }) => {
                 </TableCell>
                 <TableCell align="right">
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                    <Tooltip title="View Details">
-                      <IconButton size="small" color="primary">
+                    <Tooltip title="View History">
+                      <IconButton size="small" color="primary" onClick={() => onAction(customer.id, 'view', customer.history)}>
                         <ViewIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
@@ -130,7 +130,7 @@ const CustomerTable = ({ customers, role, onAction }) => {
 
                     {(role === 'ADMIN' || role === 'SUPER_ADMIN') && (
                       <Tooltip title="Reject">
-                        <IconButton size="small" color="error">
+                        <IconButton size="small" color="error" onClick={() => onAction(customer.id, 'reject')}>
                           <RejectIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>

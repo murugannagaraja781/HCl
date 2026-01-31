@@ -9,8 +9,8 @@ const useCustomers = (searchQuery = '', page = 1, pageSize = 5) => {
     const dispatch = useDispatch();
     const { items: customers } = useSelector((state) => state.customers);
 
-    const updateCustomer = useCallback((id, updates) => {
-        dispatch(updateCustomerData({ id, updates }));
+    const updateCustomer = useCallback((id, updates, logEntry) => {
+        dispatch(updateCustomerData({ id, updates, logEntry }));
     }, [dispatch]);
 
     const filteredCustomers = useMemo(() => {

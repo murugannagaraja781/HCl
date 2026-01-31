@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import './ApplicationForm.css';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const STATUS_LABELS = {
   PENDING: 'Under Review',
   APPROVED: 'Approved',
   REJECTED: 'Rejected',
   SUBMITTED: 'Submitted',
+  'LIMIT SET': 'Credit Limit Assigned',
+  ACTIVE: 'Active / Card Issued'
 };
 
 const ApplicationStatusCheck = ({ onClose }) => {
@@ -16,6 +16,7 @@ const ApplicationStatusCheck = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState(null);
+  const { items: customers } = useSelector(state => state.customers);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,22 +28,27 @@ const ApplicationStatusCheck = ({ onClose }) => {
     setError('');
     setStatus(null);
     setLoading(true);
-    axios
-      .get(`${API_URL}/api/applications/status`, {
-        params: { applicationNumber: num },
-      })
-      .then((res) => {
-        setStatus(res?.data || { status: 'PENDING', applicationNumber: num });
+
+    // Simulate lookup in Redux store (Demo mode)
+    setTimeout(() => {
+        // Try to find by ID or Name for demo purposes
+        const customer = customers.find(c =>
+            c.id.toString() === num ||
+            `HCL-${c.id}` === num ||
+            c.name.toLowerCase().includes(num.toLowerCase())
+        );
+
+        if (customer) {
+            setStatus({
+                applicationNumber: `HCL-${customer.id}00${customer.id}`,
+                status: (customer.finalStatus || customer.limitStatus).toUpperCase(),
+                message: customer.finalStatus === 'Active' ? 'Your card is ready for use!' : 'Your application is progressing through our verification stages.'
+            });
+        } else {
+            setError('Application number not found. Please try "1" or "John".');
+        }
         setLoading(false);
-      })
-      .catch(() => {
-        setStatus({
-          applicationNumber: num,
-          status: 'PENDING',
-          message: 'Status could not be fetched. Showing placeholder.',
-        });
-        setLoading(false);
-      });
+    }, 800);
   };
 
   return (

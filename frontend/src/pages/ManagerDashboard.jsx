@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import {
+  Add as AddIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Search as SearchIcon
+} from '@mui/icons-material';
 import {
   Box,
   Typography,
@@ -19,14 +24,17 @@ import {
   MenuItem,
   Alert,
   CircularProgress,
-  IconButton
+  IconButton,
+  InputAdornment
 } from '@mui/material';
-import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import useCards from '../hooks/useCards';
+import useDebounce from '../hooks/useDebounce';
 import withRole from '../hoc/withRole';
 
 const ManagerDashboard = () => {
-    const { cards, addCard, loading } = useCards();
+    const [search, setSearch] = useState('');
+    const debouncedSearch = useDebounce(search, 500);
+    const { cards, addCard, loading } = useCards(debouncedSearch);
     const [open, setOpen] = useState(false);
     const [newCard, setNewCard] = useState({
         cardName: '',
@@ -66,14 +74,31 @@ const ManagerDashboard = () => {
                         Manage HCL Credit Card lifecycle and benefits.
                     </Typography>
                 </Box>
-                <Button
-                    variant="contained"
-                    startIcon={<AddIcon />}
-                    onClick={() => setOpen(true)}
-                    sx={{ px: 3, py: 1.2 }}
-                >
-                    Add New Product
-                </Button>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+                    <TextField
+                        placeholder="Search products..."
+                        variant="outlined"
+                        size="small"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        sx={{ width: { xs: '100%', sm: 250 }, backgroundColor: 'white' }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon color="action" />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        onClick={() => setOpen(true)}
+                        sx={{ px: 3, py: 1.2 }}
+                    >
+                        Add New Product
+                    </Button>
+                </Box>
             </Box>
 
             {status.msg && <Alert severity={status.type} sx={{ mb: 3 }} onClose={() => setStatus({type:'', msg:''})}>{status.msg}</Alert>}

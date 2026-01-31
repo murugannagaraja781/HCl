@@ -1,11 +1,11 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCards, addCard as addCardThunk } from '../redux/slices/cardSlice';
 
 /**
  * Redux-based hook for managing credit card products
  */
-const useCards = () => {
+const useCards = (searchQuery = '') => {
     const dispatch = useDispatch();
     const { items: cards, loading, error } = useSelector((state) => state.cards);
 
@@ -14,6 +14,14 @@ const useCards = () => {
             dispatch(fetchCards());
         }
     }, [dispatch, cards.length]);
+
+    const filteredCards = useMemo(() => {
+        if (!searchQuery) return cards;
+        return cards.filter(card =>
+            card.cardName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            card.cardType.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [cards, searchQuery]);
 
     const addCard = useCallback(async (cardData) => {
         const resultAction = await dispatch(addCardThunk(cardData));
@@ -28,7 +36,7 @@ const useCards = () => {
     }, [dispatch]);
 
     return {
-        cards,
+        cards: filteredCards,
         loading,
         error,
         refresh: () => dispatch(fetchCards()),

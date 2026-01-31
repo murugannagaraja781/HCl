@@ -1,4 +1,10 @@
-import React from 'react';
+import {
+  TrendingUp,
+  Warning,
+  People,
+  CreditCard,
+  Search as SearchIcon
+} from '@mui/icons-material';
 import {
   Box,
   Typography,
@@ -9,14 +15,13 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Avatar
+  Avatar,
+  TextField,
+  InputAdornment,
+  Pagination
 } from '@mui/material';
-import {
-  TrendingUp,
-  Warning,
-  People,
-  CreditCard
-} from '@mui/icons-material';
+import { useState } from 'react';
+import useDebounce from '../hooks/useDebounce';
 import withRole from '../hoc/withRole';
 import useCards from '../hooks/useCards';
 import useCustomers from '../hooks/useCustomers';
@@ -24,7 +29,21 @@ import CustomerTable from '../components/CustomerTable';
 
 const AdminDashboard = () => {
     const { cards } = useCards();
-    const { customers } = useCustomers('', 1, 5);
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
+    const [historyOpen, setHistoryOpen] = useState(false);
+    const [selectedHistory, setSelectedHistory] = useState([]);
+    const debouncedSearch = useDebounce(search, 500);
+    const { customers, totalPages, updateCustomer } = useCustomers(debouncedSearch, page, 5);
+
+    const handleAction = (id, type, data) => {
+        if (type === 'view') {
+            setSelectedHistory(data || []);
+            setHistoryOpen(true);
+        } else if (type === 'reject') {
+            updateCustomer(id, { finalStatus: 'Rejected', limitStatus: 'Rejected' }, { action: 'Application Rejected', actor: 'Admin' });
+        }
+    };
 
     const stats = [
         { label: 'Total Users', value: '2,450', icon: <People />, color: '#4caf50' },
@@ -55,10 +74,40 @@ const AdminDashboard = () => {
             </Grid>
 
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
-                    Recent Applications
-                </Typography>
-                <CustomerTable customers={customers} role="ADMIN" />
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                        Recent Applications
+                    </Typography>
+                    <TextField
+                        placeholder="Search applications..."
+                        variant="outlined"
+                        size="small"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        sx={{ width: { xs: '100%', sm: 300 }, backgroundColor: 'white' }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon color="action" />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Box>
+                <CustomerTable
+                    customers={customers}
+                    role="ADMIN"
+                    onAction={handleAction}
+                />
+                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+                    <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={(e, v) => setPage(v)}
+                        color="primary"
+                        shape="rounded"
+                    />
+                </Box>
             </Box>
 
             <Paper sx={{ p: 3 }}>
@@ -66,7 +115,7 @@ const AdminDashboard = () => {
                     System Activities
                 </Typography>
                 <Divider />
-                <List>
+                <List dense>
                     <ListItem>
                         <ListItemIcon><TrendingUp color="success" /></ListItemIcon>
                         <ListItemText
@@ -83,6 +132,33 @@ const AdminDashboard = () => {
                     </ListItem>
                 </List>
             </Paper>
+
+            <Dialog open={historyOpen} onClose={() => setHistoryOpen(false)} maxWidth="xs" fullWidth>
+                <DialogTitle sx={{ fontWeight: 800 }}>Application History</DialogTitle>
+                <DialogContent dividers>
+                    <List dense>
+                        {selectedHistory.map((item, i) => (
+                            <React.Fragment key={i}>
+                                <ListItem sx={{ py: 1.5 }}>
+                                    <ListItemText
+                                        primary={<strong>{item.action}</strong>}
+                                        secondary={
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
+                                                <Typography variant="caption">{item.actor}</Typography>
+                                                <Typography variant="caption">{item.date}</Typography>
+                                            </Box>
+                                        }
+                                    />
+                                </ListItem>
+                                {i < selectedHistory.length - 1 && <Divider />}
+                            </React.Fragment>
+                        ))}
+                    </List>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setHistoryOpen(false)}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
