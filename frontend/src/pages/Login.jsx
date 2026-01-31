@@ -35,7 +35,8 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-page">
+      <div className="login-container">
       <h1>Credit Card Portal</h1>
       {error && <div className="error-msg">{error}</div>}
       <form onSubmit={handleSubmit}>
@@ -61,6 +62,7 @@ const Login = () => {
         </div>
         <button type="submit" className="login-btn">Sign In</button>
       </form>
+      </div>
     </div>
   );
 };
