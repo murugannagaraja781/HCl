@@ -18,7 +18,12 @@ import {
   Avatar,
   TextField,
   InputAdornment,
-  Pagination
+  Pagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button
 } from '@mui/material';
 import React, { useState, Fragment } from 'react';
 import useDebounce from '../hooks/useDebounce';
