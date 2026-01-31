@@ -72,12 +72,20 @@ const CustomerTable = ({ customers, role, onAction }) => {
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Chip
-                    label={customer.creditScore}
-                    color={customer.creditScore >= 700 ? 'success' : customer.creditScore >= 600 ? 'warning' : 'error'}
-                    variant="outlined"
-                    size="small"
-                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
+                    <Chip
+                      label={customer.creditScore}
+                      color={customer.creditScore >= 800 ? 'success' : customer.creditScore >= 700 ? 'primary' : customer.creditScore >= 600 ? 'warning' : 'error'}
+                      variant={customer.creditScore >= 800 ? 'filled' : 'outlined'}
+                      size="small"
+                      sx={{ fontWeight: 700 }}
+                    />
+                    {customer.creditScore >= 800 && (
+                      <Typography variant="caption" sx={{ color: 'success.main', fontWeight: 800, fontSize: '9px', textTransform: 'uppercase' }}>
+                        🚀 Fast Track
+                      </Typography>
+                    )}
+                  </Box>
                 </TableCell>
 
                 {(role === 'MANAGER2' || role === 'SUPER_ADMIN' || role === 'ADMIN') && (

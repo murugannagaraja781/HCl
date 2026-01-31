@@ -62,7 +62,7 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
       if (res?.data?.score != null) {
         setCreditScore(res.data.score);
       } else {
-       
+
         const simulated = 600 + Math.floor(Math.random() * 250);
         setCreditScore(simulated);
       }
@@ -98,26 +98,22 @@ const ApplicationForm = ({ card, onClose, variant = 'popup' }) => {
     }
 
     setCheckingPrevious(true);
-    axios
-      .get(`${API_URL}/api/applications/previous`, {
-        params: { pan: formData.pan.trim().toUpperCase() },
-      })
-      .then((res) => {
-        const hasRecent = res?.data?.hasRecentApplication;
-        if (hasRecent) {
-          setError(
-            'A previous application was Approved or Rejected in the last 6 months for this PAN. You cannot apply again yet.'
-          );
-          setCheckingPrevious(false);
-          return;
-        }
+
+    // Simulate finding a recent application (dummy logic)
+    const mockRecentApps = ['ABCDE1234F', 'XYZPQ9876S'];
+    const isRecent = mockRecentApps.includes(formData.pan.trim().toUpperCase());
+
+    setTimeout(() => {
+      if (isRecent) {
+        setError(
+          'A previous application was Approved or Rejected in the last 6 months for this PAN. You cannot apply again yet.'
+        );
+        setCheckingPrevious(false);
+      } else {
         setStep(2);
         setCheckingPrevious(false);
-      })
-      .catch(() => {
-        setStep(2);
-        setCheckingPrevious(false);
-      });
+      }
+    }, 800);
   };
 
   const handleSendOTP = (e) => {

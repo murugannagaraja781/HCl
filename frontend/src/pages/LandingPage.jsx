@@ -63,8 +63,13 @@ const LandingPage = () => {
                     <h1>The Future of <span className="gradient-text">Credit</span> is Here</h1>
                     <p>Designed for your lifestyle. Seamless, secure, and rewarding.</p>
                     <div className="hero-btns">
-                        <button className="btn-primary">Explore Now</button>
-                        <button className="btn-secondary" onClick={() => setShowStatusCheck(true)}>Check Application Status</button>
+                        <button className="btn-primary" onClick={() => {
+                            const section = document.querySelector('.categories-section');
+                            section?.scrollIntoView({ behavior: 'smooth' });
+                        }}>Explore Cards</button>
+                        <button className="btn-status" onClick={() => setShowStatusCheck(true)}>
+                            Track Application Status
+                        </button>
                     </div>
                 </div>
             </header>

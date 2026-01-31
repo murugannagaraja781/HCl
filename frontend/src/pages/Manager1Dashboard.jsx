@@ -55,7 +55,7 @@ const Manager1Dashboard = () => {
             </Box>
 
             <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
-                <strong>Action Required:</strong> Please verify the credit scores below. Clicking evaluate will move the application to the Limit Setting stage.
+                <strong>Hackathon Rule:</strong> Applications with Credit Score <strong>&gt; 800</strong> are eligible for <strong>Fast Track Approval</strong>. Scores below 600 should be carefully reviewed for rejection.
             </Alert>
 
             <CustomerTable
