@@ -1,0 +1,73 @@
+# HCL Credit Card Portal - Workflow & Login Guide
+
+Welcome to the HCL Credit Card Portal. This project is built using a Microservices Architecture.
+
+---
+
+## 🚀 How to Run the System
+
+To start the entire backend, you need to open three terminals and run the following in each:
+
+1. **API Gateway (Port 3000)**:
+   ```bash
+   cd backend/api-gateway && npm start
+   ```
+2. **Auth Service (Port 3001)**:
+   ```bash
+   cd backend/auth-service && npm run dev
+   ```
+3. **Card Service (Port 3003)**:
+   ```bash
+   cd backend/card-application-service && npm run dev
+   ```
+
+*The Frontend (Vite) is already configured to communicate through the Gateway on Port 3000.*
+
+---
+
+## 🔑 Login Credentials
+
+All users share the same password for the hackathon demo: **Admin@2026**
+
+| Role      | Username | Access Level |
+|-----------|----------|--------------|
+| Admin     | admin    | Full control / Final Approval |
+| Manager 1 | m1       | Credit Score Evaluation |
+| Manager 2 | m2       | Credit Limit Approval |
+
+---
+
+## 🔄 Application Workflow
+
+### 1. Submission (Applicant)
+- User visits the **Landing Page**.
+- Fills out the application with PAN, Income, and Age details.
+- System validates: Age > 18 and a 6-month cooldown for the same PAN.
+- A unique **Application Number** (e.g., HCL-XXXX) is generated.
+
+### 2. Level 1: Score Evaluation (Manager 1)
+- Manager 1 logs in.
+- Sees the application in the dashboard.
+- Analyzes the Credit Score.
+- **Auto-Logic**: If Score > 800, the system prompts for immediate limit setting.
+
+### 3. Level 2: Limit Approval (Manager 2)
+- Manager 2 logs in to see "Limit Set" applications.
+- Verifies the assigned credit limit based on income rules:
+  - Income < 5L: Max 50,000
+  - Income < 10L: Max 75,000
+  - Income > 10L: Up to 1,000,000
+- Approves the limit.
+
+### 4. Level 3: Final Verification (Admin)
+- Admin logs in for final oversight.
+- Can officially "Approve" or "Reject" the application.
+- Adds comments to the history log.
+
+### 5. Tracking (Applicant)
+- Applicant returns to the Landing Page.
+- Clicks "Track Application Status".
+- Enters their Application Number to see the real-time progress and history logs.
+
+---
+Built for HCL Hackathon 2026 🦾

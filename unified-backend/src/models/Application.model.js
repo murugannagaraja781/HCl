@@ -1,13 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const HistorySchema = new mongoose.Schema({
-  date: { type: String, required: true },
-  action: { type: String, required: true },
-  actor: { type: String, required: true }
+    date: { type: String, required: true },
+    action: { type: String, required: true },
+    actor: { type: String, required: true }
 }, { _id: false });
 
-const CardApplicationSchema = new mongoose.Schema(
-  {
+const ApplicationSchema = new mongoose.Schema({
     applicationNumber: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
     email: { type: String, required: true },
@@ -20,25 +19,23 @@ const CardApplicationSchema = new mongoose.Schema(
 
     // Status tracking as used in frontend
     limitStatus: {
-      type: String,
-      enum: ['Pending', 'Limit Set', 'Approved', 'Rejected'],
-      default: 'Pending'
+        type: String,
+        enum: ['Pending', 'Limit Set', 'Approved', 'Rejected'],
+        default: 'Pending'
     },
     finalStatus: {
-      type: String,
-      enum: ['Pending', 'Approved', 'Rejected'],
-      default: 'Pending'
+        type: String,
+        enum: ['Pending', 'Approved', 'Rejected'],
+        default: 'Pending'
     },
 
     approvedLimit: { type: Number, default: 0 },
     cardName: { type: String },
 
     history: [HistorySchema]
-  },
-  { timestamps: true }
-);
+}, { timestamps: true });
 
 // Index for PAN to quickly check previous applications
-CardApplicationSchema.index({ pan: 1 });
+ApplicationSchema.index({ pan: 1 });
 
-module.exports = mongoose.model("CardApplication", CardApplicationSchema);
+module.exports = mongoose.model('Application', ApplicationSchema);

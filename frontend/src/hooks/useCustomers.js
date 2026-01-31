@@ -1,36 +1,32 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateCustomerData } from '../redux/slices/customerSlice';
+import { updateCustomerData, fetchCustomers } from '../redux/slices/customerSlice';
 
 /**
- * Redux-based hook for managing customer data with pagination and search
+ * Redux-based hook for managing customer data with real API integration
  */
 const useCustomers = (searchQuery = '', page = 1, pageSize = 5) => {
     const dispatch = useDispatch();
-    const { items: customers } = useSelector((state) => state.customers);
+    const { items: customers, total, pages: totalPages, loading } = useSelector((state) => state.customers);
+
+    useEffect(() => {
+        // Fetch from API whenever search/page changes
+        dispatch(fetchCustomers({
+            search: searchQuery,
+            page,
+            limit: pageSize
+        }));
+    }, [dispatch, searchQuery, page, pageSize]);
 
     const updateCustomer = useCallback((id, updates, logEntry) => {
         dispatch(updateCustomerData({ id, updates, logEntry }));
     }, [dispatch]);
 
-    const filteredCustomers = useMemo(() => {
-        return customers.filter(c =>
-            c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            c.phone.includes(searchQuery)
-        );
-    }, [searchQuery, customers]);
-
-    const totalPages = Math.ceil(filteredCustomers.length / pageSize);
-    const paginatedCustomers = useMemo(() => {
-        const start = (page - 1) * pageSize;
-        return filteredCustomers.slice(start, start + pageSize);
-    }, [filteredCustomers, page, pageSize]);
-
     return {
-        customers: paginatedCustomers,
-        totalCount: filteredCustomers.length,
+        customers: customers, // Now directly from state (server-side filtered/paged)
+        totalCount: total,
         totalPages,
+        loading,
         updateCustomer,
         allCustomers: customers
     };

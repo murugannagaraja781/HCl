@@ -57,12 +57,12 @@ const CustomerTable = ({ customers, role, onAction }) => {
           {customers.length > 0 ? (
             customers.map((customer) => (
               <TableRow
-                key={customer.id}
+                key={customer._id || customer.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, '&:hover': { backgroundColor: '#fdfdfd' } }}
               >
                 <TableCell component="th" scope="row">
                   <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                    {customer.name}
+                    {customer.fullName || customer.name}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -107,14 +107,14 @@ const CustomerTable = ({ customers, role, onAction }) => {
                 <TableCell align="right">
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
                     <Tooltip title="View History">
-                      <IconButton size="small" color="primary" onClick={() => onAction(customer.id, 'view', customer.history)}>
+                      <IconButton size="small" color="primary" onClick={() => onAction(customer._id || customer.id, 'view', customer.history)}>
                         <ViewIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
 
                     {role === 'MANAGER1' && customer.limitStatus === 'Pending' && (
                       <Tooltip title="Evaluate Score">
-                        <IconButton size="small" color="success" onClick={() => onAction(customer.id, 'evaluate')}>
+                        <IconButton size="small" color="success" onClick={() => onAction(customer._id || customer.id, 'evaluate')}>
                           <EditIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
@@ -122,7 +122,7 @@ const CustomerTable = ({ customers, role, onAction }) => {
 
                     {role === 'MANAGER2' && customer.limitStatus === 'Limit Set' && (
                       <Tooltip title="Approve Limit">
-                        <IconButton size="small" color="success" onClick={() => onAction(customer.id, 'approve')}>
+                        <IconButton size="small" color="success" onClick={() => onAction(customer._id || customer.id, 'approve')}>
                           <ApproveIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
@@ -130,7 +130,7 @@ const CustomerTable = ({ customers, role, onAction }) => {
 
                     {(role === 'ADMIN' || role === 'SUPER_ADMIN') && (
                       <Tooltip title="Reject">
-                        <IconButton size="small" color="error" onClick={() => onAction(customer.id, 'reject')}>
+                        <IconButton size="small" color="error" onClick={() => onAction(customer._id || customer.id, 'reject')}>
                           <RejectIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>

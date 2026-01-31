@@ -6,40 +6,54 @@ const User = require("../models/User.model");
  * LOGIN
  */
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email, status: "active" });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+    // Demo users for hackathon
+    const demoUsers = {
+      'admin': { id: 1, name: 'Admin User', role: 'ADMIN' },
+      'm1': { id: 2, name: 'Manager One', role: 'MANAGER1' },
+      'm2': { id: 3, name: 'Manager Two', role: 'MANAGER2' }
+    };
+
+    const demoUser = demoUsers[username?.toLowerCase()];
+    if (demoUser && password === 'Admin@2026') {
+      const token = jwt.sign({ userId: demoUser.id, role: demoUser.role }, process.env.JWT_SECRET || 'secret');
+      return res.json({ success: true, user: demoUser, token });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      user.passwordHash
-    );
+    // Regular DB login
+    const user = await User.findOne({
+      $or: [{ email: username }, { username: username }],
+      status: "active"
+    });
 
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
-      {
-        userId: user._id,
-        role: user.role,
-        approvalLevel: user.employeeInfo?.approvalLevel
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: '1h' }
     );
 
     res.json({
-      userId: user._id,
-      role: user.role,
+      success: true,
+      user: {
+        id: user._id,
+        name: user.username,
+        role: user.role
+      },
       token
     });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 

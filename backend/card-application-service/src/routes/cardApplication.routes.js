@@ -3,12 +3,18 @@ const router = express.Router();
 const controller = require("../controllers/cardApplication.controller");
 
 // Submit application
-router.post("/submit", controller.submitApplication);
+router.post("/", controller.submitApplication);
 
-// Get application by PAN
-router.get("/status/:pan", controller.getApplicationByPan);
+// Cooldown check
+router.get("/previous", controller.checkPrevious);
 
-// L1 / L2 / L3 approval
-router.put("/approve/:id", controller.updateApplicationStatus);
+// Get application status
+router.get("/status", controller.getApplicationStatus);
+
+// List applications (Admin/Manager)
+router.get("/", controller.getApplications);
+
+// Update application (Approve/Reject)
+router.patch("/:id", controller.updateApplication);
 
 module.exports = router;

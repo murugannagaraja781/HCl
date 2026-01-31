@@ -3,24 +3,19 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 
-app.use("/auth", createProxyMiddleware({
+app.use("/api/auth", createProxyMiddleware({
   target: "http://localhost:3001",
   changeOrigin: true,
-  pathRewrite:{
-    "^/auth":"/auth"
+  pathRewrite: {
+    "^/api/auth": "/auth"
   }
 }));
 
-app.use("/pan", createProxyMiddleware({
-  target: "http://localhost:3002",
-  changeOrigin: true
-}));
-
-app.use("/card", createProxyMiddleware({
+app.use("/api/applications", createProxyMiddleware({
   target: "http://localhost:3003",
   changeOrigin: true,
-  pathRewrite:{
-    "^/card":"/card"
+  pathRewrite: {
+    "^/api/applications": ""
   }
 }));
 
