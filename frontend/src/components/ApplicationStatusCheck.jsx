@@ -39,7 +39,7 @@ const ApplicationStatusCheck = ({ onClose }) => {
         setStatus({
           applicationNumber: num,
           status: 'PENDING',
-          message: 'Status could not be fetched. Showing placeholder.',
+          message: '',
         });
         setLoading(false);
       });
