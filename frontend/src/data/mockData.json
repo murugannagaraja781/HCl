@@ -1,4 +1,5 @@
- [
+[
+  { "id": 1, "name": "Regular User", "email": "user@gmail.com", "creditScore": 750, "limitStatus": "Approved", "approvedLimit": 150000, "finalStatus": "Approved", "phone": "9876543210" },
   { "id": 4, "name": "Aarav Kumar", "email": "aarav4@example.com", "creditScore": 735, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000004" },
   { "id": 5, "name": "Diya Sharma", "email": "diya5@example.com", "creditScore": 680, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000005" },
   { "id": 6, "name": "Rohan Mehta", "email": "rohan6@example.com", "creditScore": 710, "limitStatus": "Pending", "approvedLimit": 0, "finalStatus": "Pending", "phone": "9000000006" },
